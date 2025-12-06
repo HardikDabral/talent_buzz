@@ -241,7 +241,7 @@ export default function AboutUs() {
                 <span className="text-white/60 text-[10px] sm:text-xs">/100</span>
               </div>
             </div>
-            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24">
+            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24 min-h-[48px] min-w-[100px]">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={areaData}>
                   <defs>
@@ -298,7 +298,7 @@ export default function AboutUs() {
                 <span className="text-white/60 text-[10px] sm:text-xs">%</span>
               </div>
             </div>
-            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24">
+            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24 min-h-[48px] min-w-[100px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData}>
                   <Bar dataKey="value" fill="#ffffff" radius={[4, 4, 0, 0]} animationDuration={2000}>
@@ -340,7 +340,7 @@ export default function AboutUs() {
                 <span className="text-white/60 text-[10px] sm:text-xs">%</span>
               </div>
             </div>
-            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24">
+            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24 min-h-[48px] min-w-[100px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={lineData}>
                   <Line type="monotone" dataKey="value" stroke="#ffffff" strokeWidth={2} dot={false} animationDuration={2000} />
@@ -373,7 +373,7 @@ export default function AboutUs() {
           >
             <div className="mb-2 sm:mb-3 md:mb-4 text-center">
               <h4 className="text-white text-[10px] sm:text-xs md:text-sm font-semibold mb-2 sm:mb-3">Conversion Rate</h4>
-              <div className="hidden sm:block relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto">
+              <div className="hidden sm:block relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto min-w-[64px] min-h-[64px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <RadialBarChart innerRadius="60%" outerRadius="90%" data={[{ value: conversion, fill: "#ffffff" }]} startAngle={90} endAngle={-270}>
                     <RadialBar dataKey="value" cornerRadius={10} fill="#ffffff" animationDuration={2000} />
