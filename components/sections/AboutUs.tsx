@@ -114,6 +114,7 @@ export default function AboutUs() {
 
   const { theme } = useThemeStore();
   const [isDark, setIsDark] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Sync theme with DOM on mount and when theme changes
   useEffect(() => {
@@ -139,6 +140,10 @@ export default function AboutUs() {
 
     return () => observer.disconnect();
   }, [theme]);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -241,20 +246,24 @@ export default function AboutUs() {
                 <span className="text-white/60 text-[10px] sm:text-xs">/100</span>
               </div>
             </div>
-            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24 min-h-[48px] min-w-[100px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={areaData}>
-                  <defs>
-                    <linearGradient id={`gradient-${cardId}`} x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#ffffff" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#ffffff" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <Area type="monotone" dataKey="value" stroke="#ffffff" strokeWidth={1.5} fill={`url(#gradient-${cardId})`} animationDuration={2000} />
-                  <XAxis dataKey="month" hide />
-                  <YAxis hide />
-                </AreaChart>
-              </ResponsiveContainer>
+            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24 min-h-[48px] min-w-[100px] w-full" style={{ width: "100%", height: "100%" }}>
+              {isMounted ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={areaData}>
+                    <defs>
+                      <linearGradient id={`gradient-${cardId}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#ffffff" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#ffffff" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <Area type="monotone" dataKey="value" stroke="#ffffff" strokeWidth={1.5} fill={`url(#gradient-${cardId})`} animationDuration={2000} />
+                    <XAxis dataKey="month" hide />
+                    <YAxis hide />
+                  </AreaChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="w-full h-full" />
+              )}
             </div>
             <div className="mb-2 sm:mb-3">
               <div className="flex justify-between items-center mb-1 sm:mb-1.5">
@@ -298,18 +307,22 @@ export default function AboutUs() {
                 <span className="text-white/60 text-[10px] sm:text-xs">%</span>
               </div>
             </div>
-            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24 min-h-[48px] min-w-[100px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={barData}>
-                  <Bar dataKey="value" fill="#ffffff" radius={[4, 4, 0, 0]} animationDuration={2000}>
-                    {barData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={index % 2 === 0 ? "#ffffff" : "rgba(255,255,255,0.7)"} />
-                    ))}
-                  </Bar>
-                  <XAxis dataKey="name" hide />
-                  <YAxis hide />
-                </BarChart>
-              </ResponsiveContainer>
+            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24 min-h-[48px] min-w-[100px] w-full" style={{ width: "100%", height: "100%" }}>
+              {isMounted ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={barData}>
+                    <Bar dataKey="value" fill="#ffffff" radius={[4, 4, 0, 0]} animationDuration={2000}>
+                      {barData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={index % 2 === 0 ? "#ffffff" : "rgba(255,255,255,0.7)"} />
+                      ))}
+                    </Bar>
+                    <XAxis dataKey="name" hide />
+                    <YAxis hide />
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="w-full h-full" />
+              )}
             </div>
             <div className="grid grid-cols-3 gap-1 sm:gap-1.5">
               {barData.slice(0, 3).map((item, idx) => (
@@ -340,14 +353,18 @@ export default function AboutUs() {
                 <span className="text-white/60 text-[10px] sm:text-xs">%</span>
               </div>
             </div>
-            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24 min-h-[48px] min-w-[100px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={lineData}>
-                  <Line type="monotone" dataKey="value" stroke="#ffffff" strokeWidth={2} dot={false} animationDuration={2000} />
-                  <XAxis dataKey="day" hide />
-                  <YAxis hide />
-                </LineChart>
-              </ResponsiveContainer>
+            <div className="mb-2 sm:mb-3 md:mb-4 h-12 sm:h-16 md:h-20 lg:h-24 min-h-[48px] min-w-[100px] w-full" style={{ width: "100%", height: "100%" }}>
+              {isMounted ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={lineData}>
+                    <Line type="monotone" dataKey="value" stroke="#ffffff" strokeWidth={2} dot={false} animationDuration={2000} />
+                    <XAxis dataKey="day" hide />
+                    <YAxis hide />
+                  </LineChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="w-full h-full" />
+              )}
             </div>
             <div className="flex items-center justify-between">
               <div className="bg-white/5 rounded p-1.5 sm:p-2 flex-1 mr-1">
@@ -373,12 +390,16 @@ export default function AboutUs() {
           >
             <div className="mb-2 sm:mb-3 md:mb-4 text-center">
               <h4 className="text-white text-[10px] sm:text-xs md:text-sm font-semibold mb-2 sm:mb-3">Conversion Rate</h4>
-              <div className="hidden sm:block relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto min-w-[64px] min-h-[64px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <RadialBarChart innerRadius="60%" outerRadius="90%" data={[{ value: conversion, fill: "#ffffff" }]} startAngle={90} endAngle={-270}>
-                    <RadialBar dataKey="value" cornerRadius={10} fill="#ffffff" animationDuration={2000} />
-                  </RadialBarChart>
-                </ResponsiveContainer>
+              <div className="hidden sm:block relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto min-w-[64px] min-h-[64px]" style={{ width: "100%", height: "100%" }}>
+                {isMounted ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadialBarChart innerRadius="60%" outerRadius="90%" data={[{ value: conversion, fill: "#ffffff" }]} startAngle={90} endAngle={-270}>
+                      <RadialBar dataKey="value" cornerRadius={10} fill="#ffffff" animationDuration={2000} />
+                    </RadialBarChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="w-full h-full" />
+                )}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="text-white text-lg sm:text-xl md:text-2xl font-bold">
                     <AnimatedCounter value={conversion} />%
