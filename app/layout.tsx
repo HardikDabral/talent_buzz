@@ -23,9 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={manrope.variable} suppressHydrationWarning>
-      <body className="font-sans antialiased bg-white dark:bg-black text-black dark:text-white transition-colors">
+      <body className="font-sans antialiased bg-white dark:bg-background text-black dark:text-white transition-colors">
         <ThemeProvider>
-        <Navbar />
+          <Navbar />
           {children}
         </ThemeProvider>
       </body>

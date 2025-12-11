@@ -12,35 +12,35 @@ type FaqItem = {
 
 const faqs: FaqItem[] = [
   {
-    question: "Can you explain how TalentBuzz works?",
+    question: "What makes Gweel Herbal products different from others?",
     answer:
-      "TalentBuzz gives you a clear, data-backed view of every performer so you can book with confidence instead of guesswork.",
+      "Gweel Herbal is a farm-to-bottle brand. We grow our own lemongrass organically on family-owned land and craft every product with pure, natural ingredients.",
     bullets: [
-      "One unified profile for each talent: clips, reels, photos, ratings, and verified experience.",
-      "Smart tags and filters so you can instantly narrow down by style, genre, location, and availability.",
-      "A concierge-like flow that helps you shortlist, compare, and reach out without endless back-and-forth.",
-      "Transparent performance history so you always know what to expect on stage, on set, or at your event.",
+      "100% organic cultivation with zero chemicals or pesticides",
+      "Hand-selected leaves steam-distilled in small batches for maximum potency",
+      "No synthetic additives, artificial fragrances, or harmful chemicals",
+      "Sustainable, eco-friendly processes from farm to your home",
     ],
   },
   {
-    question: "Is TalentBuzz just for agencies, or can artists use it too?",
+    question: "Are your products really 100% natural and organic?",
     answer:
-      "Both. TalentBuzz is built for bookers, brands, and individual artists. Artists get a premium profile and pipeline of opportunities, while bookers get a clean dashboard to manage casting and bookings.",
+      "Yes! Every Gweel Herbal product is made from pure, organically grown lemongrass. We use steam distillation to extract essential oils and handcraft our candles and fragrances with only natural plant extracts. No synthetics, ever.",
   },
   {
-    question: "What types of talents can I find on TalentBuzz?",
+    question: "What products does Gweel Herbal offer?",
     answer:
-      "From dancers, singers, and magicians to comedians, actors, and visual artists — if they can perform, you can probably find them here. We’re continuously expanding categories as the community grows.",
+      "We offer a complete range of lemongrass-based wellness products including pure essential oils, handcrafted aroma candles, herbal fragrances, room sprays, diffuser oils, and premium gift sets. All products are 100% natural and therapeutic.",
   },
   {
-    question: "How do bookings and payments work?",
+    question: "How should I use lemongrass essential oil?",
     answer:
-      "You discover, shortlist, and connect with talent through TalentBuzz, then confirm details and payments securely via our booking flow. Every step is tracked so both sides have a clear, shared timeline.",
+      "Our lemongrass essential oil is versatile and therapeutic. Add a few drops to a diffuser for aromatherapy, mix with carrier oils for massage, use in DIY skincare, or add to cleaning solutions for a fresh, natural scent. Always dilute before topical use.",
   },
   {
-    question: "Can I use TalentBuzz for recurring events or long-term projects?",
+    question: "How do I order Gweel Herbal products?",
     answer:
-      "Yes. You can curate your own private pools of go-to talents, reuse shortlists, and rebook past performers in a few clicks for tours, residencies, or recurring productions.",
+      "You can browse our product range on our website and place orders directly. We offer secure payment options and ship across India. For bulk orders or custom gift sets, please contact us directly for special pricing.",
   },
 ];
 
@@ -82,33 +82,24 @@ export default function Faq() {
   const textColor = isDark ? "#ffffff" : "#000000";
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-background">
+    <section id="faqs" className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-background">
       <div className="mx-auto max-w-[1440px]">
-        <div className="mb-10 flex items-center justify-between gap-4">
-          <div>
-            <p
+        <div className="mb-10 flex items-center justify-center gap-4">
+          <div className="text-left">
+            {/* <p
               className="text-xs mb-1.5 tracking-wide uppercase"
-              style={{ color: mutedColor }}
+              style={{ color: isDark ? "#FEBE10" : "#000000" }}
             >
               Support
-            </p>
+            </p> */}
             <h2
               className="text-2xl sm:text-3xl md:text-4xl font-semibold"
-              style={{ color: textColor }}
+              style={{ color: isDark ? "#FEBE10" : "#000000" }}
             >
               Frequently Asked Questions
             </h2>
           </div>
 
-          <button
-            className="hidden sm:inline-flex items-center rounded-full border px-4 py-2 text-xs font-medium transition-colors"
-            style={{
-              borderColor,
-              color: textColor,
-            }}
-          >
-            Read more
-          </button>
         </div>
 
         <div
