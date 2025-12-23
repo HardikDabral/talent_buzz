@@ -2,16 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, LogIn, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useThemeStore } from "@/lib/store/useThemeStore";
+import { PopupForm } from "@/components/sections/Popupform"
 
 const navItems = [
-  { href: "/", label: "What's Included" },
-  { href: "/stories", label: "Stories" },
-  { href: "/why", label: "Our Why" },
-  { href: "/faqs", label: "FAQs" },
+  { href: "/#about", label: "About Us" },
+  { href: "/#stories", label: "Stories" },
+  { href: "/#contact", label: "Contact Us" },
+  { href: "/#faqs", label: "FAQs" },
 ];
 
 export function Navbar() {
@@ -64,15 +66,27 @@ export function Navbar() {
       >
         {/* Mobile: Logo on Left */}
         <div className="lg:hidden">
-          <Link href="/" className="text-xl sm:text-2xl font-bold text-white lowercase whitespace-nowrap">
-            talentbuzz
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/images/talents/logowhite.png"
+              alt="ZodAi Logo"
+              width={100}
+              height={100}
+              className="h-48 w-auto object-contain"
+            />
           </Link>
         </div>
 
         {/* Desktop: Center - Brand Name (always centered) */}
         <div className="hidden lg:block absolute left-1/2 -translate-x-1/2">
-          <Link href="/" className="text-xl sm:text-2xl font-bold text-white lowercase whitespace-nowrap">
-            talentbuzz
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/images/talents/logowhite.png"
+              alt="ZodAi Logo"
+              width={500}
+              height={500}
+              className="h-64 w-auto object-contain"
+            />
           </Link>
         </div>
 
@@ -137,13 +151,13 @@ export function Navbar() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: 0.6 }}
               >
-                <Link
-                  href="/login"
-                  className="flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-orange-500 text-white text-sm sm:text-[15px] font-semibold transition-colors hover:bg-orange-600 whitespace-nowrap"
-                >
-                  <LogIn className="w-4 h-4 sm:w-5 sm:h-5" />
-                  Login
-                </Link>
+                <PopupForm
+                  trigger={
+                    <button className="flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-[#2C9F85] text-white text-sm sm:text-[15px] font-semibold transition-colors hover:bg-[#3CBFA0] whitespace-nowrap">
+                      Start Now
+                    </button>
+                  }
+                />
               </motion.div>
             </motion.div>
           )}

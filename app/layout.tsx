@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const manrope = Manrope({
@@ -12,8 +13,8 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "TalentBuzz - Discover and Connect with Talented Artists",
-  description: "Explore talented artists, classes, and events. Join TalentBuzz to showcase your talent or discover amazing performers.",
+  title: "ZodAi - Discover and Connect with Talented Artists",
+  description: "Explore talented artists, classes, and events. Join ZodAi to showcase your talent or discover amazing performers.",
 };
 
 export default function RootLayout({
@@ -25,8 +26,9 @@ export default function RootLayout({
     <html lang="en" className={manrope.variable} suppressHydrationWarning>
       <body className="font-sans antialiased bg-white dark:bg-black text-black dark:text-white transition-colors">
         <ThemeProvider>
-        <Navbar />
+          <Navbar />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

@@ -12,9 +12,9 @@ type FaqItem = {
 
 const faqs: FaqItem[] = [
   {
-    question: "Can you explain how TalentBuzz works?",
+    question: "Can you explain how ZodAi works?",
     answer:
-      "TalentBuzz gives you a clear, data-backed view of every performer so you can book with confidence instead of guesswork.",
+      "ZodAi gives you a clear, data-backed view of every performer so you can book with confidence instead of guesswork.",
     bullets: [
       "One unified profile for each talent: clips, reels, photos, ratings, and verified experience.",
       "Smart tags and filters so you can instantly narrow down by style, genre, location, and availability.",
@@ -23,22 +23,22 @@ const faqs: FaqItem[] = [
     ],
   },
   {
-    question: "Is TalentBuzz just for agencies, or can artists use it too?",
+    question: "Is ZodAi just for agencies, or can artists use it too?",
     answer:
-      "Both. TalentBuzz is built for bookers, brands, and individual artists. Artists get a premium profile and pipeline of opportunities, while bookers get a clean dashboard to manage casting and bookings.",
+      "Both. ZodAi is built for bookers, brands, and individual artists. Artists get a premium profile and pipeline of opportunities, while bookers get a clean dashboard to manage casting and bookings.",
   },
   {
-    question: "What types of talents can I find on TalentBuzz?",
+    question: "What types of talents can I find on ZodAi?",
     answer:
       "From dancers, singers, and magicians to comedians, actors, and visual artists — if they can perform, you can probably find them here. We’re continuously expanding categories as the community grows.",
   },
   {
     question: "How do bookings and payments work?",
     answer:
-      "You discover, shortlist, and connect with talent through TalentBuzz, then confirm details and payments securely via our booking flow. Every step is tracked so both sides have a clear, shared timeline.",
+      "You discover, shortlist, and connect with talent through ZodAi, then confirm details and payments securely via our booking flow. Every step is tracked so both sides have a clear, shared timeline.",
   },
   {
-    question: "Can I use TalentBuzz for recurring events or long-term projects?",
+    question: "Can I use ZodAi for recurring events or long-term projects?",
     answer:
       "Yes. You can curate your own private pools of go-to talents, reuse shortlists, and rebook past performers in a few clicks for tours, residencies, or recurring productions.",
   },
@@ -82,33 +82,23 @@ export default function Faq() {
   const textColor = isDark ? "#ffffff" : "#000000";
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-background">
+    <section id="faqs" className="pb-16 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="mx-auto max-w-[1440px]">
-        <div className="mb-10 flex items-center justify-between gap-4">
+        <div className="mb-12 flex flex-col items-center text-center gap-6">
           <div>
             <p
-              className="text-xs mb-1.5 tracking-wide uppercase"
+              className="text-xs mb-2 font-medium tracking-wider uppercase"
               style={{ color: mutedColor }}
             >
               Support
             </p>
             <h2
-              className="text-2xl sm:text-3xl md:text-4xl font-semibold"
+              className="text-3xl md:text-4xl font-semibold"
               style={{ color: textColor }}
             >
               Frequently Asked Questions
             </h2>
           </div>
-
-          <button
-            className="hidden sm:inline-flex items-center rounded-full border px-4 py-2 text-xs font-medium transition-colors"
-            style={{
-              borderColor,
-              color: textColor,
-            }}
-          >
-            Read more
-          </button>
         </div>
 
         <div

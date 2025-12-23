@@ -1,230 +1,127 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import { PopupForm } from "@/components/sections/Popupform";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Animation variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: 30,
-    scale: 0.95,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-  },
-};
-
-const videoVariants = {
-  hidden: { 
-    opacity: 0,
-    scale: 1.1,
-  },
-  visible: {
-    opacity: 1,
-    scale: 1,
-  },
-};
-
-const overlayVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.8,
-      delay: 0.2,
-    },
-  },
-};
+gsap.registerPlugin(ScrollTrigger);
 
 export function HeroSection() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const heroRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Track scroll position - increased range for slower animation
-  const { scrollY } = useScroll();
-  const scrollYProgress = useTransform(scrollY, [0, 1200], [0, 1]);
-  
-  // 3D transforms based on scroll - magical disappearing effect
-  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 60]);
-  const rotateY = useTransform(scrollYProgress, [0, 1], [0, -25]);
-  const rotateZ = useTransform(scrollYProgress, [0, 1], [0, 15]);
-  const scale = useTransform(scrollYProgress, [0, 0.8, 1], [1, 0.5, 0.2]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, -300]);
-  const z = useTransform(scrollYProgress, [0, 1], [0, -1500]);
-  const opacity = useTransform(scrollYProgress, [0, 0.4, 0.8, 1], [1, 0.9, 0.3, 0]);
-  const blurValue = useTransform(scrollYProgress, [0, 0.6, 1], [0, 8, 30]);
-  const brightness = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.7, 0.2]);
+  const videoWrapperRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const textElementsRef = useRef<HTMLDivElement>(null); // To group text elements for staggered animation
 
   useEffect(() => {
-    setIsLoaded(true);
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "+=1500", // Distance to scroll to complete animation
+          scrub: 1, // Smooth interaction
+          pin: true,
+          // markers: true, // Debugging
+        },
+      });
+
+      // 1. Grow the video wrapper to full size (with padding)
+      tl.to(videoWrapperRef.current, {
+        width: "calc(100% - 3rem)", // Leave some space on the sides
+        height: "calc(100% - 3rem)", // Leave some space on top/bottom
+        borderRadius: "2rem", // Keep rounded corners
+        duration: 1.5,
+        ease: "power2.inOut",
+      })
+        // 2. Fade in the content container
+        .to(contentRef.current, {
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        }, "-=0.5") // Overlap slightly with the end of the grow
+        // 3. Stagger in the text elements
+        .from(textElementsRef.current?.children || [], {
+          y: 50,
+          opacity: 0,
+          stagger: 0.15,
+          duration: 1,
+          ease: "back.out(1.7)",
+        });
+
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-background pt-0 pb-8 px-4 sm:px-6 lg:px-8" style={{ perspective: "2000px" }}>
-      <div className="w-full h-[calc(100vh-5rem)] sm:h-[calc(100vh-5.5rem)]">
-        {/* Hero Section with Video - 3D Scroll Effect */}
-        <motion.section 
-          ref={heroRef}
-          className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl mt-4 sm:mt-6"
+    <div ref={containerRef} className="relative w-full h-screen bg-background overflow-hidden">
+      {/* Centering Container for the Initial State */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        {/* Video Wrapper - Starts Small */}
+        <div
+          ref={videoWrapperRef}
+          className="relative overflow-hidden z-0 pointer-events-auto"
+          // Initial styles: Small box, rounded corners
           style={{
-            rotateX,
-            rotateY,
-            rotateZ,
-            scale,
-            y,
-            z,
-            opacity,
-            filter: useTransform(
-              [blurValue, brightness],
-              ([blur, bright]) => `blur(${blur}px) brightness(${bright})`
-            ),
-            transformStyle: "preserve-3d",
-            transformOrigin: "center center",
+            width: "80%",
+            height: "30%",
+            borderRadius: "2rem",
+            transformOrigin: "center center"
           }}
         >
           {/* Video Background */}
-          <motion.div 
-            className="relative w-full h-full"
-            variants={videoVariants}
-            initial="hidden"
-            animate={isLoaded ? "visible" : "hidden"}
-            transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
           >
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            >
-              <source src="/videos/heroVideo.mp4" type="video/mp4" />
-            </video>
-            
-            {/* Animated Overlay Gradient */}
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60"
-              variants={overlayVariants}
-              initial="hidden"
-              animate={isLoaded ? "visible" : "hidden"}
-            />
-            
-            {/* Content Overlay with Staggered Animations */}
-            <motion.div 
-              className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-8 lg:px-12 z-10"
-              variants={containerVariants}
-              initial="hidden"
-              animate={isLoaded ? "visible" : "hidden"}
-            >
-              {/* Title with word-by-word animation */}
-              <motion.h1 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-4 sm:mb-6 leading-[1.1] px-2"
-                variants={itemVariants}
-                transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-              >
-                <motion.span
-                  className="inline-block"
-                  initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  transition={{ duration: 0.8, delay: 0.5 }}
-                >
-                  Unlock your new
-                </motion.span>
-                <br />
-                <motion.span
-                  className="inline-block"
-                  initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  transition={{ duration: 0.8, delay: 0.7 }}
-                >
-                  talent potential
-                </motion.span>
-              </motion.h1>
-              
-              {/* Description with fade and slide */}
-              <motion.p 
-                className="text-base sm:text-lg md:text-xl text-white/95 mb-6 sm:mb-8 max-w-3xl px-2 font-normal leading-relaxed"
-                variants={itemVariants}
-                transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-              >
-                Connect with world-class artists and performers.
-                <br />
-                Discover opportunities across dance, music, magic, and more.
-                <br />
-                Showcase your talent and grow your career.
-              </motion.p>
-              
-              {/* Button with scale and glow effect */}
-              <motion.div
-                variants={itemVariants}
-                transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-orange-500 hover:bg-orange-600 h-13 text-white px-6 sm:px-8 py-6 sm:py-6 text-base sm:text-lg font-semibold rounded-full relative overflow-hidden group"
-                >
-                  <Link href="/apply" className="relative z-10">
-                    <motion.span
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 1.1, duration: 0.5 }}
+            <source src="/videos/heroVideo.mp4" type="video/mp4" />
+          </video>
+
+          {/* Dark Overlay for Text Readability */}
+          <div className="absolute inset-0 bg-black/40 z-[1]" />
+
+          {/* Content Overlay */}
+          <div
+            ref={contentRef}
+            className="absolute inset-0 z-[2] flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-8 lg:px-12 opacity-0"
+          >
+            <div ref={textElementsRef} className="flex flex-col items-center max-w-4xl">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+                Crafting Intelligent <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3CBFA0] via-[#21F4BD] to-[#CFFFF1]">
+                  Web & App Solutions
+                </span>
+              </h1>
+
+              <p className="text-lg sm:text-xl md:text-2xl text-white/90 mb-8 max-w-2xl font-light leading-relaxed">
+                We build cutting-edge websites and mobile applications integrated with advanced AI technologies to accelerate your business growth.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <PopupForm
+                  trigger={
+                    <Button
+                      size="lg"
+                      className="bg-[#2C9F85] hover:bg-[#3CBFA0] text-white text-lg px-8 py-6 rounded-full font-semibold transition-all hover:scale-105"
                     >
-                      Start Testing
-                    </motion.span>
-                    <motion.span 
-                      className="ml-2 inline-block"
-                      initial={{ opacity: 0, x: -5 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 1.3, duration: 0.5 }}
-                    >
-                      &gt;
-                    </motion.span>
-                    {/* Shimmer effect */}
-                    <motion.span
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                      initial={{ x: "-100%" }}
-                      animate={{ x: "200%" }}
-                      transition={{
-                        repeat: Infinity,
-                        repeatDelay: 3,
-                        duration: 1.5,
-                        ease: "easeInOut",
-                      }}
-                    />
-                  </Link>
-                </Button>
-              </motion.div>
-              
-              {/* Footer text with fade */}
-              <motion.p 
-                className="mt-4 sm:mt-6 text-sm sm:text-base text-white/85 flex items-center justify-center gap-2"
-                variants={itemVariants}
-                transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-              >
-                Free to join and explore
-              </motion.p>
-            </motion.div>
-          </motion.div>
-        </motion.section>
+                      Start Your Project &gt;
+                    </Button>
+                  }
+                />
+
+                <p className="text-white/80 text-sm">
+                  AI-Powered • Scalable • Secure
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

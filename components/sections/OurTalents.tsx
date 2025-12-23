@@ -4,6 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform, animate } from "framer-motion";
 import { useThemeStore } from "@/lib/store/useThemeStore";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 type Talent = {
   id: number;
@@ -13,61 +20,61 @@ type Talent = {
   gridSpan: string; // CSS grid span classes
 };
 
-const talents: Talent[] = [
+const services: Talent[] = [
   {
     id: 1,
-    name: "Dancers",
-    category: "Performance",
-    image: "/images/talents/bigImage1.jpg",
+    name: "AI/ML Solutions",
+    category: "Intelligence",
+    image: "/images/talents/aiml.jpg",
     gridSpan: "col-span-1 md:col-span-2 row-span-1 md:row-span-2",
   },
   {
     id: 2,
-    name: "Musicians",
-    category: "Music",
-    image: "/images/talents/bigImage2.jpg",
+    name: "Payment Integration",
+    category: "Fintech",
+    image: "/images/talents/payment3.jpg",
     gridSpan: "col-span-1 md:col-span-1 row-span-1",
   },
   {
     id: 3,
-    name: "Magicians",
-    category: "Entertainment",
-    image: "/images/talents/bigImage3.jpg",
+    name: "Cloud Infra",
+    category: "DevOps",
+    image: "/images/talents/clouds2.jpg",
     gridSpan: "col-span-1 md:col-span-1 row-span-1",
   },
   {
     id: 4,
-    name: "Singers",
-    category: "Vocal",
-    image: "/images/talents/bigImage4.jpg",
+    name: "Web Development",
+    category: "Full Stack",
+    image: "/images/talents/web4.jpg",
     gridSpan: "col-span-1 md:col-span-2 row-span-1",
   },
   {
     id: 5,
-    name: "Actors",
-    category: "Theater",
-    image: "/images/talents/bigImage5.jpg",
+    name: "Mobile Apps",
+    category: "iOS & Android",
+    image: "/images/talents/mobile3.jpg",
     gridSpan: "col-span-1 md:col-span-1 row-span-1",
   },
   {
     id: 6,
-    name: "Comedians",
-    category: "Comedy",
-    image: "/images/talents/smallImage1.jpg",
+    name: "UI/UX Design",
+    category: "Creative",
+    image: "/images/talents/ui.jpg",
     gridSpan: "col-span-1 md:col-span-1 row-span-1",
   },
   {
     id: 7,
-    name: "Acrobats",
-    category: "Circus",
-    image: "/images/talents/smallImage2.jpg",
+    name: "Data Analytics",
+    category: "Big Data",
+    image: "/images/talents/dataanalysis.jpg",
     gridSpan: "col-span-1 md:col-span-1 row-span-1",
   },
   {
     id: 8,
-    name: "Painters",
-    category: "Visual Arts",
-    image: "/images/talents/smallImage3.jpg",
+    name: "Cybersecurity",
+    category: "Security",
+    image: "/images/talents/cyber.jpg",
     gridSpan: "col-span-1 md:col-span-2 row-span-1",
   },
 ];
@@ -99,14 +106,14 @@ const TypewriterText = ({
 };
 
 // Combined 3D Card Component with mouse tracking + hover effects
-function Card3DInteractive({ 
-  children, 
-  className, 
+function Card3DInteractive({
+  children,
+  className,
   isHovered,
-  style 
-}: { 
-  children: React.ReactNode; 
-  className?: string; 
+  style
+}: {
+  children: React.ReactNode;
+  className?: string;
   isHovered: boolean;
   style?: React.CSSProperties;
 }) {
@@ -153,7 +160,7 @@ function Card3DInteractive({
     [rotateXMouse, hoverRotateX],
     ([mouse, hover]) => (mouse as number) + (hover as number)
   );
-  
+
   const finalRotateY = useTransform(
     [rotateYMouse, hoverRotateY],
     ([mouse, hover]) => (mouse as number) + (hover as number)
@@ -195,7 +202,7 @@ export default function OurTalents() {
     const checkTheme = () => {
       if (typeof window !== "undefined") {
         const savedTheme = localStorage.getItem("theme");
-        const isDarkMode = savedTheme 
+        const isDarkMode = savedTheme
           ? savedTheme === "dark"
           : document.documentElement.classList.contains("dark");
         setIsDark(isDarkMode);
@@ -216,86 +223,136 @@ export default function OurTalents() {
   }, [theme]);
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-background overflow-visible">
+    <section className="pb-16 px-0 sm:px-6 lg:px-8 bg-background overflow-visible">
       <div className="mx-auto overflow-visible max-w-[1440px]">
         {/* Section Header */}
-        <div className="mb-12">
+        <div className="mb-12 text-center">
           <p
-            className="text-xs mb-1.5"
+            className="text-xs mb-2 font-medium tracking-wider uppercase"
             style={{ color: isDark ? "#ffffff" : "#000000" }}
           >
-            OUR TALENTS
+            OUR EXPERTISE
           </p>
           <h2
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold"
+            className="text-3xl md:text-4xl font-semibold"
             style={{ color: isDark ? "#ffffff" : "#000000" }}
           >
-            Discover Our Diverse Talent Pool
+            End-to-End Digital Services
           </h2>
         </div>
 
         {/* Bento Grid */}
         <div className="relative" style={{ perspective: "1000px" }}>
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-6 md:gap-8 auto-rows-fr">
-            {talents.map((talent) => (
-            <div
-              key={talent.id}
-              className={`relative ${talent.gridSpan}`}
-              style={{ zIndex: hoveredId === talent.id ? 10 : 1 }}
-              onMouseEnter={() => setHoveredId(talent.id)}
-              onMouseLeave={() => setHoveredId(null)}
+          {/* Mobile Carousel (shadcn/ui) */}
+          <div className="lg:hidden mb-8">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
             >
-              <Card3DInteractive
-                className="relative rounded-2xl overflow-hidden cursor-pointer w-full h-full"
-                isHovered={hoveredId === talent.id}
+              <CarouselContent>
+                {services.map((service) => (
+                  <CarouselItem key={service.id} className="basis-[85%] pl-4">
+                    <div className="h-[300px] p-1">
+                      <Card3DInteractive
+                        className="relative rounded-2xl overflow-hidden cursor-pointer w-full h-full"
+                        isHovered={false}
+                      >
+                        <motion.div
+                          className="relative w-full h-full bg-gray-900"
+                          style={{ transformStyle: "preserve-3d" }}
+                        >
+                          <Image
+                            src={service.image}
+                            alt={service.name}
+                            fill
+                            className="object-cover"
+                            priority={service.id <= 2}
+                          />
+                          {/* Content */}
+                          <div className="absolute inset-0 flex flex-col justify-end p-6">
+                            <div>
+                              <p className="text-white/70 text-sm mb-1 font-medium">
+                                {service.category}
+                              </p>
+                              <h3 className="text-white text-xl font-bold">
+                                {service.name}
+                              </h3>
+                            </div>
+                          </div>
+                        </motion.div>
+                      </Card3DInteractive>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+
+            </Carousel>
+          </div>
+
+          {/* Desktop Grid */}
+          <div className="hidden lg:grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-6 md:gap-8 auto-rows-fr">
+            {services.map((service) => (
+              <div
+                key={service.id}
+                className={`relative ${service.gridSpan}`}
+                style={{ zIndex: hoveredId === service.id ? 10 : 1 }}
+                onMouseEnter={() => setHoveredId(service.id)}
+                onMouseLeave={() => setHoveredId(null)}
               >
-              <motion.div 
-                className="relative w-full h-full min-h-[200px] sm:min-h-[250px] md:min-h-[300px]"
-                style={{
-                  transformStyle: "preserve-3d",
-                }}
-              >
-                <Image
-                  src={talent.image}
-                  alt={talent.name}
-                  fill
-                  className="object-cover"
-                  priority={talent.id <= 4}
-                />
-                
-                {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/80" />
-                
-                {/* Content */}
-                <motion.div 
-                  className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6"
-                  style={{
-                    transformStyle: "preserve-3d",
-                  }}
-                  animate={{
-                    transform: hoveredId === talent.id ? "translateZ(20px)" : "translateZ(0px)",
-                  }}
-                  transition={{ duration: 0.4 }}
+                <Card3DInteractive
+                  className="relative rounded-2xl overflow-hidden cursor-pointer w-full h-full"
+                  isHovered={hoveredId === service.id}
                 >
                   <motion.div
-                    animate={{
-                      y: hoveredId === talent.id ? 0 : 10,
-                      opacity: hoveredId === talent.id ? 1 : 0.9,
+                    className="relative w-full h-full min-h-[200px] sm:min-h-[250px] md:min-h-[300px]"
+                    style={{
+                      transformStyle: "preserve-3d",
                     }}
-                    transition={{ duration: 0.3 }}
                   >
-                    <p className="text-white/70 text-xs sm:text-sm mb-1 font-medium">
-                      {talent.category}
-                    </p>
-                    <h3 className="text-white text-lg sm:text-xl md:text-2xl font-bold">
-                      {talent.name}
-                    </h3>
+                    <Image
+                      src={service.image}
+                      alt={service.name}
+                      fill
+                      className="object-cover"
+                      priority={service.id <= 4}
+                    />
+
+                    {/* Overlay Gradient */}
+
+
+                    {/* Content */}
+                    <motion.div
+                      className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6"
+                      style={{
+                        transformStyle: "preserve-3d",
+                      }}
+                      animate={{
+                        transform: hoveredId === service.id ? "translateZ(20px)" : "translateZ(0px)",
+                      }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <motion.div
+                        animate={{
+                          y: hoveredId === service.id ? 0 : 10,
+                          opacity: hoveredId === service.id ? 1 : 0.9,
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <p className="text-white/70 text-xs sm:text-sm mb-1 font-medium">
+                          {service.category}
+                        </p>
+                        <h3 className="text-white text-lg sm:text-xl md:text-2xl font-bold">
+                          {service.name}
+                        </h3>
+                      </motion.div>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              </motion.div>
-              </Card3DInteractive>
-            </div>
-          ))}
+                </Card3DInteractive>
+              </div>
+            ))}
           </div>
 
           {/* Quotes in Gap - Below Singers, Right of Acrobats - Desktop Only */}
@@ -303,58 +360,52 @@ export default function OurTalents() {
             className="hidden lg:flex absolute top-[300px] left-[calc(75%+1.25rem)] right-4 flex-col items-start gap-6 pointer-events-none"
             style={{ top: "calc(52% + 1.25rem)" }}
           >
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="text-left"
-                >
-                  <p
-                    className="text-xs mb-1"
-                    style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
-                  >
-                    Live talent signal
-                  </p>
-                  <p className="text-base md:text-lg font-medium leading-relaxed mb-2">
-                    <TypewriterText text="See every talent as a live moment, not just another profile card." />
-                  </p>
-                  <p
-                    className="text-xs"
-                    style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
-                  >
-                    Streaming from auditions, shows, and real-world performances.
-                  </p>
-                </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-left"
+            >
+              <p
+                className="text-xs mb-1"
+                style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
+              >
+                Tech Excellence
+              </p>
+              <p className="text-base md:text-lg font-medium leading-relaxed mb-2">
+                <TypewriterText text="Seamless integration with modern stacks for maximum performance." />
+              </p>
+              <p
+                className="text-xs"
+                style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
+              >
+                From simple APIs to complex microservices architecture.
+              </p>
+            </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  className="text-left"
-                >
-                  <p
-                    className="text-xs mb-1"
-                    style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
-                  >
-                    Casting-ready insights
-                  </p>
-                  <p
-                    className="text-base md:text-lg font-medium leading-relaxed mb-2"
-                    style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
-                  >
-                    Shortlists built from real performance data, not just vibes.
-                  </p>
-                  <p
-                    className="text-xs"
-                    style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
-                  >
-                    Match talents to roles, stages, and brands in a few clicks.
-                  </p>
-                </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-left"
+            >
+              <p
+                className="text-xs mb-1"
+                style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
+              >
+                Smart Automation
+              </p>
+              <p
+                className="text-base md:text-lg font-medium leading-relaxed mb-2"
+                style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
+              >
+                Leverage AI/ML to automate workflows and reduce manual overhead.
+              </p>
+            </motion.div>
           </div>
 
           {/* Quotes on Right Side of Painters Card - Desktop Only */}
-          <div className="hidden lg:flex absolute bottom-[50px] left-[calc(51%+0.5rem)] w-[600px] flex-col items-start gap-6 pointer-events-none">
+          <div className="hidden lg:flex absolute bottom-[50px] left-[calc(51%+0.5rem)] max-w-[550px] flex-col items-start gap-6 pointer-events-none">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -365,19 +416,19 @@ export default function OurTalents() {
                 className="text-xs mb-1"
                 style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
               >
-                Visual stories
+                Design & Experience
               </p>
               <p
                 className="text-base md:text-lg font-medium leading-relaxed mb-2"
                 style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
               >
-                Moodboards, lookbooks, and reels — all stitched into one living canvas.
+                Crafting intuitive user interfaces that engage and convert users.
               </p>
               <p
                 className="text-xs"
                 style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
               >
-                Shareable in a link, bookable in a click.
+                Pixel-perfect implementation across all devices.
               </p>
             </motion.div>
 
@@ -391,25 +442,25 @@ export default function OurTalents() {
                 className="text-xs mb-1"
                 style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
               >
-                Growth over time
+                Scalable Growth
               </p>
               <p
                 className="text-base md:text-lg font-medium leading-relaxed mb-2"
                 style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
               >
-                Track how every set, show, and collab levels up your talent profile.
+                Infrastructure that grows with your business, ensuring 99.9% uptime.
               </p>
               <p
                 className="text-xs"
                 style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
               >
-                From first booking to world tour — see the line, not just the dots.
+                Secure, reliable, and always optimized.
               </p>
             </motion.div>
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 }
 
