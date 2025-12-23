@@ -34,7 +34,7 @@ export function Footer() {
   }, [theme]);
 
   // Using conditional classes based on isDark state to ensure reliability
-  const footerBg = isDark ? "bg-[#000000]" : "bg-white";
+  const footerBg = isDark ? "bg-background" : "bg-white";
   const textColor = isDark ? "text-white" : "text-black";
   const mutedTextColor = isDark ? "text-white/70" : "text-gray-600";
   const hoverColor = "hover:text-[#2C9F85]";

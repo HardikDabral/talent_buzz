@@ -143,13 +143,13 @@ export default function AboutUs() {
                       Default: h-72 w-72 (Circle)
                       Hover: w-[480px] (Pill)
                   */}
-                  <div className={`relative flex items-center rounded-full transition-all duration-500 cubic-bezier(0.25, 0.46, 0.45, 0.94) h-72 w-[85vw] sm:w-[400px] lg:w-72 lg:group-hover/slide:w-[480px] skew-x-0 transform-gpu ${isDark ? 'bg-black' : 'bg-white'}`}>
+                  <div className={`relative flex items-center rounded-full transition-all duration-500 cubic-bezier(0.25, 0.46, 0.45, 0.94) h-72 w-[85vw] sm:w-[400px] lg:w-72 lg:group-hover/slide:w-[480px] skew-x-0 transform-gpu ${isDark ? 'bg-background' : 'bg-white'}`}>
 
                     {/* Image Container 
                         Start: w-full (72) -> Full Circle
                         Hover: w-36 (Half of 72) -> Semi Circle
                     */}
-                    <div className={`relative h-full w-36 rounded-r-none lg:w-full lg:rounded-r-full lg:group-hover/slide:w-36 lg:group-hover/slide:rounded-r-none shrink-0 overflow-hidden rounded-full transition-[width] duration-500 ease-in-out z-10 ${isDark ? 'bg-black' : 'bg-white'}`}>
+                    <div className={`relative h-full w-36 rounded-r-none lg:w-full lg:rounded-r-full lg:group-hover/slide:w-36 lg:group-hover/slide:rounded-r-none shrink-0 overflow-hidden rounded-full transition-[width] duration-500 ease-in-out z-10 ${isDark ? 'bg-background' : 'bg-white'}`}>
                       <Image
                         src={card.bigImage}
                         alt={card.title}

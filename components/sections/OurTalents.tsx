@@ -261,7 +261,7 @@ export default function OurTalents() {
                         isHovered={false}
                       >
                         <motion.div
-                          className="relative w-full h-full bg-gray-900"
+                          className="relative w-full h-full bg-white dark:bg-background"
                           style={{ transformStyle: "preserve-3d" }}
                         >
                           <Image

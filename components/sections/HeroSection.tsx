@@ -127,7 +127,7 @@ export function HeroSection() {
             className="absolute inset-0 z-[2] flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-8 lg:px-12 opacity-0"
           >
             <div ref={textElementsRef} className="flex flex-col items-center max-w-4xl">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
                 Crafting Intelligent <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3CBFA0] via-[#21F4BD] to-[#CFFFF1]">
                   Web & App Solutions
