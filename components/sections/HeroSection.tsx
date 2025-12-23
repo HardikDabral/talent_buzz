@@ -17,16 +17,36 @@ export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Force video playback on mount (helps with some mobile browsers)
-    if (videoRef.current) {
-      videoRef.current.play().catch((error) => {
-        console.log("Video autoplay failed:", error);
-      });
+    // Force video playback logic for mobile robustness
+    const video = videoRef.current;
+    if (video) {
+      // Explicitly set attributes to ensure browser acknowledgment
+      video.setAttribute("playsinline", "true");
+      video.setAttribute("muted", "true");
+      video.muted = true; // Double ensure property is set
+
+      const playVideo = async () => {
+        try {
+          await video.play();
+        } catch (error) {
+          console.log("Video autoplay failed:", error);
+          // Fallback: Try playing on first user interaction if autoplay failed
+          const onTouch = () => {
+            if (video.paused) {
+              video.play();
+            }
+            document.removeEventListener('touchstart', onTouch);
+          };
+          document.addEventListener('touchstart', onTouch);
+        }
+      };
+      playVideo();
     }
   }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      /* ... existing gsap logic ... */
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -87,15 +107,16 @@ export function HeroSection() {
           {/* Video Background */}
           <video
             ref={videoRef}
+            src="/videos/heroVideo.mp4"
             autoPlay
             loop
             muted
             playsInline
+            controls={false}
             preload="auto"
             className="w-full h-full object-cover"
-          >
-            <source src="/videos/heroVideo.mp4" type="video/mp4" />
-          </video>
+            onContextMenu={(e) => e.preventDefault()}
+          />
 
           {/* Dark Overlay for Text Readability */}
           <div className="absolute inset-0 bg-black/40 z-[1]" />

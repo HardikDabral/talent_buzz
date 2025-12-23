@@ -203,17 +203,17 @@ export function Talents() {
                         </button>
 
                         {/* Bottom Bar Content Overlay */}
-                        <div className="absolute bottom-4 left-4 right-4 bg-black/30 backdrop-blur-xl rounded-2xl p-4 flex items-center justify-between border border-white/10">
-                          <span className="text-white text-lg font-bold">
+                        <div className="absolute bottom-4 left-4 right-4 bg-black/30 backdrop-blur-xl rounded-2xl p-2 sm:p-4 flex items-center justify-between border border-white/10">
+                          <span className="text-white text-sm sm:text-lg font-bold">
                             {section.price}
                           </span>
 
                           <PopupForm
                             trigger={
                               <button
-                                className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center transition-transform hover:scale-110"
+                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white text-black flex items-center justify-center transition-transform hover:scale-110"
                               >
-                                <ArrowRight className="w-5 h-5" />
+                                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                               </button>
                             }
                           />
