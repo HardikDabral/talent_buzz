@@ -68,7 +68,7 @@ export function WhoAreWe() {
                             {/* Inline Image 1 */}
                             <span className="inline-flex items-center justify-center align-middle mx-2 relative h-10 w-20 sm:h-12 sm:w-24 rounded-full overflow-hidden translate-y-1">
                                 <Image
-                                    src="/images/talents/bigImage1.jpg"
+                                    src="/images/talents/aiml.jpg"
                                     alt="Developers"
                                     fill
                                     className="object-cover"
