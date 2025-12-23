@@ -53,7 +53,7 @@ const services: Talent[] = [
     id: 5,
     name: "Mobile Apps",
     category: "iOS & Android",
-    image: "/images/talents/mobile3.jpg",
+    image: "/images/talents/mobiles.jpg",
     gridSpan: "col-span-1 md:col-span-1 row-span-1",
   },
   {
