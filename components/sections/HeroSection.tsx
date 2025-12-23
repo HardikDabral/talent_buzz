@@ -14,6 +14,16 @@ export function HeroSection() {
   const videoWrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const textElementsRef = useRef<HTMLDivElement>(null); // To group text elements for staggered animation
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Force video playback on mount (helps with some mobile browsers)
+    if (videoRef.current) {
+      videoRef.current.play().catch((error) => {
+        console.log("Video autoplay failed:", error);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -72,12 +82,16 @@ export function HeroSection() {
             transformOrigin: "center center"
           }}
         >
+
+
           {/* Video Background */}
           <video
+            ref={videoRef}
             autoPlay
             loop
             muted
             playsInline
+            preload="auto"
             className="w-full h-full object-cover"
           >
             <source src="/videos/heroVideo.mp4" type="video/mp4" />

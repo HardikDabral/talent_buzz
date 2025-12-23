@@ -234,7 +234,7 @@ export default function OurTalents() {
             OUR EXPERTISE
           </p>
           <h2
-            className="text-3xl md:text-4xl font-semibold"
+            className="text-3xl md:text-4xl px-4 font-semibold"
             style={{ color: isDark ? "#ffffff" : "#000000" }}
           >
             End-to-End Digital Services

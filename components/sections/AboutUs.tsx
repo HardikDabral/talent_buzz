@@ -143,13 +143,13 @@ export default function AboutUs() {
                       Default: h-72 w-72 (Circle)
                       Hover: w-[480px] (Pill)
                   */}
-                  <div className={`relative flex items-center rounded-full transition-all duration-500 cubic-bezier(0.25, 0.46, 0.45, 0.94) h-72 w-72 group-hover/slide:w-[480px] skew-x-0 transform-gpu ${isDark ? 'bg-black' : 'bg-white'}`}>
+                  <div className={`relative flex items-center rounded-full transition-all duration-500 cubic-bezier(0.25, 0.46, 0.45, 0.94) h-72 w-[85vw] sm:w-[400px] lg:w-72 lg:group-hover/slide:w-[480px] skew-x-0 transform-gpu ${isDark ? 'bg-black' : 'bg-white'}`}>
 
                     {/* Image Container 
                         Start: w-full (72) -> Full Circle
                         Hover: w-36 (Half of 72) -> Semi Circle
                     */}
-                    <div className={`relative h-full w-full group-hover/slide:w-36 shrink-0 overflow-hidden rounded-full group-hover/slide:rounded-r-none transition-[width] duration-500 ease-in-out z-10 ${isDark ? 'bg-black' : 'bg-white'}`}>
+                    <div className={`relative h-full w-36 rounded-r-none lg:w-full lg:rounded-r-full lg:group-hover/slide:w-36 lg:group-hover/slide:rounded-r-none shrink-0 overflow-hidden rounded-full transition-[width] duration-500 ease-in-out z-10 ${isDark ? 'bg-black' : 'bg-white'}`}>
                       <Image
                         src={card.bigImage}
                         alt={card.title}
@@ -160,7 +160,7 @@ export default function AboutUs() {
                     </div>
 
                     {/* Text Content - Right Side */}
-                    <div className="absolute right-0 top-0 bottom-0 flex flex-col justify-center w-[calc(100%-9rem)] pl-6 pr-8 opacity-0 group-hover/slide:opacity-100 transition-opacity duration-300 delay-150">
+                    <div className="absolute right-0 top-0 bottom-0 flex flex-col justify-center w-[calc(100%-9rem)] pl-6 pr-8 opacity-100 lg:opacity-0 lg:group-hover/slide:opacity-100 transition-opacity duration-300 delay-150">
                       <div className="flex flex-col items-start gap-1 text-left">
                         <h3 className={`text-xl font-bold leading-none tracking-tight mb-0.5 whitespace-nowrap ${isDark ? 'text-white' : 'text-black'}`}>
                           {card.title}
