@@ -26,10 +26,10 @@ const testimonials: Testimonial[] = [
     id: 1,
     quote: "ZodAi helped me land my first major gig. The platform made it so easy to showcase my dance portfolio and connect with event organizers. Within a week, I had three bookings!",
     author: {
-      name: "Sarah Martinez",
+      name: "Pranjal Sharma",
       age: 24,
       role: "Professional Dancer",
-      avatar: "/images/talents/smallImage1.jpg",
+      avatar: "/images/talents/user1.jpg",
     },
     date: "MAY 9, 2025",
     time: "9:52 AM",
@@ -40,9 +40,9 @@ const testimonials: Testimonial[] = [
     id: 2,
     quote: "As a casting director, ZodAi has completely transformed how I discover new talent. The detailed profiles and performance history save me hours of research. Best investment I've made this year.",
     author: {
-      name: "Michael Chen",
-      role: "Casting Director, Broadway Productions",
-      avatar: "/images/talents/smallImage2.jpg",
+      name: "Rahul Verma",
+      role: "Casting Director",
+      avatar: "/images/talents/user2.jpg",
     },
     date: "MAY 22, 2025",
     time: "3:13 PM",
@@ -53,9 +53,9 @@ const testimonials: Testimonial[] = [
     id: 3,
     quote: "Building my career as a musician was always a challenge until ZodAi. Now I have a professional profile that speaks for itself, and opportunities are coming to me instead of me chasing them.",
     author: {
-      name: "James Rodriguez",
+      name: "Arjun Mehta",
       role: "Singer & Songwriter",
-      avatar: "/images/talents/smallImage3.jpg",
+      avatar: "/images/talents/user3.jpeg",
     },
     date: "FEB 23, 2025",
     type: "shared",
@@ -64,10 +64,10 @@ const testimonials: Testimonial[] = [
     id: 4,
     quote: "I've booked more gigs in the past month through ZodAi than I did in the entire last year. The platform understands what performers need and delivers exactly that.",
     author: {
-      name: "Emma Thompson",
+      name: "Ananya Gupta",
       age: 29,
       role: "Magician & Performer",
-      avatar: "/images/talents/smallImage4.jpg",
+      avatar: "/images/talents/user4.jpeg",
     },
     date: "APR 03, 2025",
     type: "shared",
@@ -76,9 +76,9 @@ const testimonials: Testimonial[] = [
     id: 5,
     quote: "The analytics and insights on ZodAi are incredible. I can see exactly how my profile performs and what attracts bookers. It's like having a talent agent built into the platform.",
     author: {
-      name: "David Park",
+      name: "Vikram Singh",
       role: "Actor & Voice Artist",
-      avatar: "/images/talents/bigImage1.jpg",
+      avatar: "/images/talents/user5.jpeg",
     },
     date: "APR 10, 2025",
     time: "4:01 PM",
@@ -89,10 +89,10 @@ const testimonials: Testimonial[] = [
     id: 6,
     quote: "From local shows to international tours, ZodAi has been with me every step of the way. The community support and professional tools have elevated my career to new heights.",
     author: {
-      name: "Lisa Anderson",
+      name: "Meera Patel",
       age: 32,
       role: "Comedian & Content Creator",
-      avatar: "/images/talents/bigImage2.jpg",
+      avatar: "/images/talents/user6.jpeg",
     },
     date: "MAY 02, 2025",
     type: "shared",
@@ -228,7 +228,7 @@ export default function Testimonials() {
                       href="#"
                       className="flex items-center gap-1 text-xs sm:text-sm font-medium hover:opacity-80 transition-opacity text-foreground/70"
                     >
-                      VIEW POST
+                      SHARED POST
                       <ArrowRight className="w-3 h-3" />
                     </a>
                   ) : (
