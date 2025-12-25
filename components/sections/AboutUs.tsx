@@ -122,10 +122,13 @@ export default function AboutUs() {
               pauseOnMouseEnter: true,
             }}
             breakpoints={{
-              640: {
+              426: {
                 slidesPerView: 2,
               },
               1024: {
+                slidesPerView: 3,
+              },
+              1440: {
                 slidesPerView: 4,
               },
             }}

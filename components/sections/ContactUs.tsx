@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useThemeStore } from "@/lib/store/useThemeStore";
-import { ArrowRight, Send, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Send, CheckCircle2, Phone } from "lucide-react";
 
 export function ContactUs() {
     const { theme } = useThemeStore();
@@ -12,17 +12,27 @@ export function ContactUs() {
 
     const [formState, setFormState] = useState({
         name: "",
+        phone: "",
         email: "",
         type: "Web Development",
-        budget: "",
         message: "",
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [phoneError, setPhoneError] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setPhoneError("");
+
+        // Basic Phone Validation (10-15 digits)
+        const phoneRegex = /^\d{10,15}$/;
+        if (!phoneRegex.test(formState.phone.replace(/\D/g, ''))) {
+            setPhoneError("Valid phone number required (10-15 digits)");
+            return;
+        }
+
         setIsSubmitting(true);
         // Simulate API call
         await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -31,12 +41,13 @@ export function ContactUs() {
         // Reset after showing success
         setTimeout(() => {
             setIsSuccess(false);
-            setFormState({ name: "", email: "", type: "Web Development", budget: "", message: "" });
+            setFormState({ name: "", phone: "", email: "", type: "Web Development", message: "" });
         }, 3000);
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormState({ ...formState, [e.target.name]: e.target.value });
+        if (e.target.name === "phone") setPhoneError("");
     };
 
     return (
@@ -112,16 +123,49 @@ export function ContactUs() {
                                     />
                                 </div>
 
+                                {/* Phone Number */}
+                                <div className="space-y-1.5">
+                                    <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground ml-1">Phone Number</label>
+                                    <div className="relative flex items-center gap-2">
+                                        <div className="relative w-[85px] shrink-0">
+                                            <select
+                                                name="countryCode"
+                                                className="w-full bg-[var(--contact-input-bg)] border border-[var(--contact-input-border)] rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#2C9F85] focus:border-transparent transition-all backdrop-blur-xl dark:shadow-[inset_0px_1px_0px_0px_rgba(255,255,255,0.02)] text-foreground appearance-none pl-9"
+                                            >
+                                                <option>+91</option>
+                                                <option>+1</option>
+                                                <option>+44</option>
+                                                <option>+61</option>
+                                                <option>+81</option>
+                                            </select>
+                                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
+                                                <span className="text-sm">🇮🇳</span>
+                                            </div>
+                                        </div>
+                                        <div className="relative flex-grow">
+                                            <input
+                                                type="tel"
+                                                name="phone"
+                                                required
+                                                value={formState.phone}
+                                                onChange={handleChange}
+                                                placeholder="Phone"
+                                                className="w-full bg-[var(--contact-input-bg)] border border-[var(--contact-input-border)] rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#2C9F85] focus:border-transparent transition-all backdrop-blur-xl dark:shadow-[inset_0px_1px_0px_0px_rgba(255,255,255,0.02)] text-foreground placeholder:text-muted-foreground/50"
+                                            />
+                                        </div>
+                                    </div>
+                                    {phoneError && <p className="text-red-500 text-xs ml-1 mt-1">{phoneError}</p>}
+                                </div>
+
                                 {/* Email */}
                                 <div className="space-y-1.5">
                                     <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground ml-1">Email</label>
                                     <input
                                         type="email"
                                         name="email"
-                                        required
                                         value={formState.email}
                                         onChange={handleChange}
-                                        placeholder="john@example.com"
+                                        placeholder="john@example.com (Optional)"
                                         className="w-full bg-[var(--contact-input-bg)] border border-[var(--contact-input-border)] rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#2C9F85] focus:border-transparent transition-all backdrop-blur-xl dark:shadow-[inset_0px_1px_0px_0px_rgba(255,255,255,0.02)] text-foreground placeholder:text-muted-foreground/50"
                                     />
                                 </div>
@@ -148,37 +192,14 @@ export function ContactUs() {
                                     </div>
                                 </div>
 
-                                {/* Budget */}
-                                <div className="space-y-1.5">
-                                    <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground ml-1">Budget Range</label>
-                                    <div className="relative">
-                                        <select
-                                            name="budget"
-                                            value={formState.budget}
-                                            onChange={handleChange}
-                                            className="w-full bg-[var(--contact-input-bg)] border border-[var(--contact-input-border)] rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#2C9F85] focus:border-transparent transition-all backdrop-blur-xl dark:shadow-[inset_0px_1px_0px_0px_rgba(255,255,255,0.02)] text-foreground appearance-none"
-                                        >
-                                            <option value="" disabled selected>Select a range</option>
-                                            <option>$5k - $10k</option>
-                                            <option>$10k - $25k</option>
-                                            <option>$25k - $50k</option>
-                                            <option>$50k+</option>
-                                        </select>
-                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 {/* Message */}
                                 <div className="col-span-1 md:col-span-2 space-y-1.5">
                                     <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground ml-1">Project Details</label>
                                     <textarea
                                         name="message"
-                                        required
                                         value={formState.message}
                                         onChange={handleChange}
-                                        placeholder="Tell us about your goals, features, and timeline..."
+                                        placeholder="Tell us about your goals, features, and timeline... (Optional)"
                                         rows={3}
                                         className="w-full bg-[var(--contact-input-bg)] border border-[var(--contact-input-border)] rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#2C9F85] focus:border-transparent transition-all overflow-hidden resize-none backdrop-blur-xl dark:shadow-[inset_0px_1px_0px_0px_rgba(255,255,255,0.02)] text-foreground placeholder:text-muted-foreground/50"
                                     />

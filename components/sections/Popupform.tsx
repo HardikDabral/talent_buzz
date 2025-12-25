@@ -9,7 +9,7 @@ import {
     DialogDescription,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { Send, CheckCircle2, User, Mail, DollarSign, Briefcase, ArrowRight } from "lucide-react";
+import { Send, CheckCircle2, User, Mail, Briefcase, ArrowRight, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface PopupFormProps {
@@ -20,17 +20,27 @@ export function PopupForm({ trigger }: PopupFormProps) {
     const [open, setOpen] = useState(false);
     const [formState, setFormState] = useState({
         name: "",
+        phone: "",
         email: "",
         type: "Web Development",
-        budget: "",
         message: "",
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [phoneError, setPhoneError] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setPhoneError("");
+
+        // Basic Phone Validation (10-15 digits)
+        const phoneRegex = /^\d{10,15}$/;
+        if (!phoneRegex.test(formState.phone.replace(/\D/g, ''))) {
+            setPhoneError("Valid phone number required (10-15 digits)");
+            return;
+        }
+
         setIsSubmitting(true);
         // Simulate API call
         await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -41,9 +51,9 @@ export function PopupForm({ trigger }: PopupFormProps) {
             setIsSuccess(false);
             setFormState({
                 name: "",
+                phone: "",
                 email: "",
                 type: "Web Development",
-                budget: "",
                 message: "",
             });
             setOpen(false);
@@ -56,6 +66,7 @@ export function PopupForm({ trigger }: PopupFormProps) {
         >
     ) => {
         setFormState({ ...formState, [e.target.name]: e.target.value });
+        if (e.target.name === "phone") setPhoneError("");
     };
 
     return (
@@ -67,7 +78,7 @@ export function PopupForm({ trigger }: PopupFormProps) {
                     </button>
                 )}
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[550px] p-0 bg-background/95 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-2xl overflow-hidden rounded-3xl">
+            <DialogContent className="sm:max-w-[625px] p-0 bg-background/95 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-2xl overflow-hidden rounded-3xl">
                 <div className="relative p-6 sm:p-8">
                     {/* Decorative Background Elements */}
                     <div className="absolute top-0 right-0 -mt-16 -mr-16 w-32 h-32 bg-[#2C9F85]/20 rounded-full blur-3xl pointer-events-none" />
@@ -125,16 +136,52 @@ export function PopupForm({ trigger }: PopupFormProps) {
                                         </div>
                                     </div>
 
+                                    {/* Phone Number */}
+                                    <div className="space-y-1.5">
+                                        <div className="relative flex items-center gap-2">
+                                            <div className="relative w-[85px] shrink-0">
+                                                <select
+                                                    name="countryCode"
+                                                    className="w-full bg-secondary/30 border border-border focus:border-[#2C9F85]/50 hover:border-border/80 rounded-xl px-3 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-[#2C9F85]/10 transition-all appearance-none text-muted-foreground/90 pl-8"
+                                                >
+                                                    <option>+91</option>
+                                                    <option>+1</option>
+                                                    <option>+44</option>
+                                                    <option>+61</option>
+                                                    <option>+81</option>
+                                                </select>
+                                                {/* Flag/Globe Icon for Country Code */}
+                                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60 pointer-events-none">
+                                                    <span className="text-xs">🇮🇳</span>
+                                                </div>
+                                            </div>
+                                            <div className="relative flex-grow">
+                                                <input
+                                                    type="tel"
+                                                    name="phone"
+                                                    required
+                                                    value={formState.phone}
+                                                    onChange={handleChange}
+                                                    placeholder="Phone"
+                                                    className="w-full bg-secondary/30 border border-border focus:border-[#2C9F85]/50 hover:border-border/80 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-[#2C9F85]/10 transition-all placeholder:text-muted-foreground/50"
+                                                />
+                                                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/60">
+                                                    <Phone className="w-4 h-4" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {phoneError && <p className="text-red-500 text-xs ml-1 mt-1">{phoneError}</p>}
+                                    </div>
+
                                     {/* Email */}
                                     <div className="space-y-1.5">
                                         <div className="relative">
                                             <input
                                                 type="email"
                                                 name="email"
-                                                required
                                                 value={formState.email}
                                                 onChange={handleChange}
-                                                placeholder="Email"
+                                                placeholder="Email (Optional)"
                                                 className="w-full bg-secondary/30 border border-border focus:border-[#2C9F85]/50 hover:border-border/80 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-[#2C9F85]/10 transition-all placeholder:text-muted-foreground/50"
                                             />
                                             <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/60">
@@ -142,10 +189,7 @@ export function PopupForm({ trigger }: PopupFormProps) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                {/* Interest & Budget Grid */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     {/* Interest */}
                                     <div className="space-y-1.5">
                                         <div className="relative">
@@ -169,40 +213,13 @@ export function PopupForm({ trigger }: PopupFormProps) {
                                             </div>
                                         </div>
                                     </div>
-
-                                    {/* Budget */}
-                                    <div className="space-y-1.5">
-                                        <div className="relative">
-                                            <select
-                                                name="budget"
-                                                value={formState.budget}
-                                                onChange={handleChange}
-                                                className="w-full bg-secondary/30 border border-border focus:border-[#2C9F85]/50 hover:border-border/80 rounded-xl pl-10 pr-8 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-[#2C9F85]/10 transition-all appearance-none text-muted-foreground/90"
-                                            >
-                                                <option value="" disabled>Budget Range</option>
-                                                <option>$5k - $10k</option>
-                                                <option>$10k - $25k</option>
-                                                <option>$25k - $50k</option>
-                                                <option>$50k+</option>
-                                            </select>
-                                            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/60">
-                                                <DollarSign className="w-4 h-4" />
-                                            </div>
-                                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground/60">
-                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-
-                                {/* Message */}
                                 <div className="space-y-1.5">
                                     <textarea
                                         name="message"
-                                        required
                                         value={formState.message}
                                         onChange={handleChange}
-                                        placeholder="Tell us about your project goals..."
+                                        placeholder="Tell us about your project goals... (Optional)"
                                         rows={3}
                                         className="w-full bg-secondary/30 border border-border focus:border-[#2C9F85]/50 hover:border-border/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-[#2C9F85]/10 transition-all resize-none placeholder:text-muted-foreground/50"
                                     />
@@ -230,6 +247,6 @@ export function PopupForm({ trigger }: PopupFormProps) {
                     </AnimatePresence>
                 </div>
             </DialogContent>
-        </Dialog>
+        </Dialog >
     );
 }
