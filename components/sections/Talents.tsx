@@ -48,7 +48,7 @@ const talentSections: TalentSection[] = [
   {
     id: 1,
     title: "AI Web Development",
-    category: "Intelligent & Scalable",
+    category: "Scalable Webs",
     description: "Handcrafted in micro-batches. Small-batch development captures the pure essence of AI-driven web growth.",
     price: "$5,000+",
     image: "/images/talents/ai.jpg",
