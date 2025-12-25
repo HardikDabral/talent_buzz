@@ -64,6 +64,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/#pricing" className={`${mutedTextColor} ${hoverColor} transition-colors`}>
+                  Pricing
+                </Link>
+              </li>
+              <li>
                 <Link href="/#stories" className={`${mutedTextColor} ${hoverColor} transition-colors`}>
                   Stories
                 </Link>

@@ -82,21 +82,21 @@ export default function Faq() {
   const textColor = isDark ? "#ffffff" : "#000000";
 
   return (
-    <section id="faqs" className="pb-16 px-4 sm:px-6 lg:px-8 bg-background">
+    <section id="faqs" className="pb-24 md:pb-36 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="mx-auto max-w-[1440px]">
         <div className="mb-12 flex flex-col items-center text-center gap-6">
           <div>
             <p
-              className="text-xs mb-2 font-medium tracking-wider uppercase"
+              className="text-xs mb-3 font-bold tracking-[0.2em] uppercase opacity-70"
               style={{ color: mutedColor }}
             >
-              Support
+              SUPPORT
             </p>
             <h2
-              className="text-3xl md:text-4xl font-semibold"
+              className="text-3xl md:text-5xl font-black tracking-tighter"
               style={{ color: textColor }}
             >
-              Frequently Asked Questions
+              Frequently Asked <span className="text-[#2C9F85]">Questions</span>
             </h2>
           </div>
         </div>

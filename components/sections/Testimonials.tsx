@@ -129,21 +129,21 @@ export default function Testimonials() {
   }, [theme]);
 
   return (
-    <section id="stories" className="pb-16 px-4 sm:px-6 lg:px-8 bg-background">
+    <section id="stories" className="pb-24 md:pb-36 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="mx-auto max-w-[1440px]">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <p
-            className="text-xs mb-2 font-medium tracking-wider uppercase"
+            className="text-xs mb-3 font-bold tracking-[0.2em] uppercase opacity-70"
             style={{ color: isDark ? "#ffffff" : "#000000" }}
           >
             TESTIMONIALS
           </p>
           <h2
-            className="text-3xl md:text-4xl font-semibold"
+            className="text-3xl md:text-5xl font-black tracking-tighter"
             style={{ color: isDark ? "#ffffff" : "#000000" }}
           >
-            Hear it from our members
+            Hear it from our <span className="text-[#2C9F85]">Members</span>
           </h2>
         </div>
 

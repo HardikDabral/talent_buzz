@@ -7,6 +7,33 @@ import useEmblaCarousel from "embla-carousel-react";
 import { PopupForm } from "@/components/sections/Popupform";
 import Autoplay from "embla-carousel-autoplay";
 import { useThemeStore } from "@/lib/store/useThemeStore";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+
+const LikeButton = () => {
+  const [liked, setLiked] = useState(false);
+
+  return (
+    <motion.button
+      onClick={() => setLiked(!liked)}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.8 }}
+      className={cn(
+        "absolute top-4 left-4 w-10 h-10 rounded-full backdrop-blur-md flex items-center justify-center transition-all duration-300 border",
+        liked
+          ? "bg-[#2C9F85]/20 border-[#2C9F85]/50 text-[#2C9F85]"
+          : "bg-black/20 text-white border-white/10 hover:bg-black/40"
+      )}
+    >
+      <motion.div
+        animate={liked ? { scale: [1, 1.4, 1] } : { scale: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Heart className={cn("w-5 h-5", liked && "fill-current")} />
+      </motion.div>
+    </motion.button>
+  );
+};
 
 type TalentSection = {
   id: number;
@@ -51,6 +78,22 @@ const talentSections: TalentSection[] = [
     image: "/images/talents/ai2.jpg",
   },
 ];
+
+// 90-Degree Inverted Corner Curve (Same as PricingSection)
+const CornerCurve = ({ className, fill }: { className?: string; fill: string }) => (
+  <svg
+    viewBox="0 0 100 100"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    preserveAspectRatio="none"
+  >
+    <path
+      d="M0 0 Q 0 100 100 100 L 0 100 Z"
+      fill={fill}
+    />
+  </svg>
+);
 
 export function Talents() {
   const [autoplay] = useState(() =>
@@ -130,97 +173,138 @@ export function Talents() {
   }, [autoplay]);
 
   return (
-    <section className="pb-24 px-4 sm:px-6 lg:pl-8 lg:pr-0 bg-background transition-colors duration-300">
+    <section className="pb-24 md:pb-36 px-4 sm:px-6 lg:pl-8 lg:pr-0 bg-background transition-colors duration-300 overflow-hidden">
       <div className="mx-auto max-w-[1800px]">
         {/* Section Header */}
         <div className="mb-12 px-2 text-center">
           <p
-            className="text-xs mb-2 font-medium tracking-wider uppercase"
+            className="text-xs mb-3 font-bold tracking-[0.2em] uppercase opacity-70"
             style={{ color: isDark ? "#ffffff" : "#000000" }}
           >
             OUR SERVICES
           </p>
           <h2
-            className="text-3xl md:text-4xl font-semibold"
+            className="text-3xl md:text-5xl font-black tracking-tighter"
             style={{ color: isDark ? "#ffffff" : "#000000" }}
           >
-            Explore our solutions
+            Explore our <span className="text-[#2C9F85]">Solutions</span>
           </h2>
         </div>
 
         {/* Carousel Container */}
         <div className="relative">
-          <div className="overflow-hidden pb-10" ref={emblaRef}>
+          <div className="overflow-hidden p-8 -m-8 pb-12" ref={emblaRef}>
             <div className="flex -ml-6 sm:-ml-8">
               {talentSections.map((section: TalentSection) => (
                 <div
                   key={section.id}
                   className="flex-[0_0_100%] sm:flex-[0_0_60%] lg:flex-[0_0_40%] min-w-0 pl-6 sm:pl-8"
                 >
-                  <div className="flex flex-col h-full">
+                  {/* --- CARD WITH CUSTOM SHAPE --- */}
+                  <div className="relative w-full min-h-[400px] md:min-h-[500px] flex flex-col group">
 
-                    {/* Top: Text Content */}
-                    <div className="mb-6">
-                      <span
-                        className="text-xs font-semibold tracking-wide opacity-60 uppercase mb-2 block"
-                        style={{ color: isDark ? "#ffffff" : "#000000" }}
+                    {/* Background & Shape */}
+                    <div className="absolute inset-0 z-0 drop-shadow-xl transition-transform duration-300 group-hover:-translate-y-2">
+                      {/* 1. Main Body */}
+                      <div
+                        className="absolute bottom-0 left-0 w-full rounded-b-[2.5rem] rounded-tr-[2.5rem] transition-colors duration-300"
+                        style={{
+                          backgroundColor: isDark ? "#1A1A1A" : "#FFFFFF",
+                          height: 'calc(100% - 5rem)' // tabHeight 5rem
+                        }}
+                      />
+
+                      {/* 2. Top-Left Tab */}
+                      <div
+                        className="absolute top-0 left-0 transition-colors duration-300"
+                        style={{
+                          backgroundColor: isDark ? "#1A1A1A" : "#FFFFFF",
+                          width: '60%', // tabWidth
+                          height: '5rem',
+                          borderTopLeftRadius: '2.5rem',
+                          borderTopRightRadius: '1.5rem',
+                        }}
+                      />
+
+                      {/* 3. Connector */}
+                      <div
+                        className="absolute transition-colors duration-300"
+                        style={{
+                          top: '2.5rem', // curveTop (5rem - 2.5rem)
+                          left: '60%',
+                          width: '2.5rem',
+                          height: '2.5rem',
+                        }}
                       >
-                        {section.category}
-                      </span>
-                      <h3
-                        className="text-2xl sm:text-3xl font-bold mb-3 leading-tight"
-                        style={{ color: isDark ? "#ffffff" : "#000000" }}
-                      >
-                        {section.title}
-                      </h3>
-                      <p
-                        className="text-sm sm:text-base leading-relaxed opacity-80 max-w-md"
-                        style={{ color: isDark ? "#ffffff" : "#000000" }}
-                      >
-                        {section.description}
-                      </p>
+                        <CornerCurve fill={isDark ? "#1A1A1A" : "#FFFFFF"} className="w-full h-full block" />
+                      </div>
+
+                      {/* 4. Filler */}
+                      <div
+                        className="absolute left-0 transition-colors duration-300"
+                        style={{
+                          top: '4rem',
+                          width: '60%',
+                          height: '5rem',
+                          backgroundColor: isDark ? "#1A1A1A" : "#FFFFFF"
+                        }}
+                      />
                     </div>
 
-                    {/* Bottom: Image Card */}
-                    <div
-                      className="group relative flex flex-col rounded-[2rem] overflow-hidden transition-all duration-300 hover:shadow-2xl"
-                      style={{
-                        boxShadow: isDark ? "0 4px 30px rgba(0,0,0,0.5)" : "0 4px 30px rgba(0,0,0,0.1)"
-                      }}
-                    >
-                      {/* Image Container */}
-                      <div className="relative w-full aspect-[16/10] overflow-hidden">
+                    {/* Content Layer */}
+                    <div className="relative z-10 h-full flex flex-col p-8 pt-10">
+
+                      {/* Header Area (in Tab) */}
+                      <div className="flex justify-between items-start mb-6">
+                        <span
+                          className="text-xs font-bold tracking-widest uppercase opacity-60 bg-black/5 dark:bg-white/10 px-3 py-1.5 rounded-full"
+                          style={{ color: isDark ? "#ffffff" : "#000000" }}
+                        >
+                          {section.category}
+                        </span>
+
+                        {/* Action Button (Centered in the "Empty" Space) */}
+                        <div
+                          className="absolute top-0 right-0 h-[5rem] flex items-center justify-center z-20 pointer-events-none"
+                          style={{ width: '40%' }} // The remaining space next to the 60% tab
+                        >
+                          <div className="pointer-events-auto">
+                            <PopupForm
+                              trigger={
+                                <button className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2C9F85] text-white text-xs font-bold tracking-wide shadow-lg transition-transform hover:scale-105 active:scale-95">
+                                  Get Started <ArrowRight className="w-3.5 h-3.5" />
+                                </button>
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Title & Desc */}
+                      <div className="mb-6 relative z-10">
+                        <h3
+                          className="text-3xl font-black tracking-tight mb-3"
+                          style={{ color: isDark ? "#ffffff" : "#000000" }}
+                        >
+                          {section.title}
+                        </h3>
+                        <p className={cn("text-base leading-relaxed opacity-70", isDark ? "text-neutral-300" : "text-neutral-600")}>
+                          {section.description}
+                        </p>
+                      </div>
+
+                      {/* Image Area */}
+                      <div className="mt-auto relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-all duration-500">
                         <Image
                           src={section.image}
                           alt={section.title}
                           fill
                           className="object-cover transition-transform duration-700 group-hover:scale-110"
                         />
-
-                        {/* Heart Icon Overlay */}
-                        <button className="absolute top-4 left-4 w-10 h-10 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white transition-colors hover:bg-black/40 border border-white/10">
-                          <Heart className="w-5 h-5" />
-                        </button>
-
-                        {/* Bottom Bar Content Overlay */}
-                        <div className="absolute bottom-4 left-4 right-4 bg-black/30 backdrop-blur-xl rounded-2xl p-2 sm:p-4 flex items-center justify-between border border-white/10">
-                          <span className="text-white text-sm sm:text-lg font-bold">
-                            {section.price}
-                          </span>
-
-                          <PopupForm
-                            trigger={
-                              <button
-                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white text-black flex items-center justify-center transition-transform hover:scale-110"
-                              >
-                                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                              </button>
-                            }
-                          />
-                        </div>
+                        <LikeButton />
                       </div>
-                    </div>
 
+                    </div>
                   </div>
                 </div>
               ))}

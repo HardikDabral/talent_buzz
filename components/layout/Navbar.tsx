@@ -11,6 +11,7 @@ import { PopupForm } from "@/components/sections/Popupform"
 
 const navItems = [
   { href: "/#about", label: "About Us" },
+  { href: "/#pricing", label: "Pricing" },
   { href: "/#stories", label: "Stories" },
   { href: "/#contact", label: "Contact Us" },
   { href: "/#faqs", label: "FAQs" },
@@ -51,7 +52,7 @@ export function Navbar() {
   return (
     <nav className="fixed top-10 left-1/2 -translate-x-1/2 z-50 w-full max-w-[96%] sm:max-w-[93%] md:max-w-[90%] lg:max-w-[88%] xl:max-w-[1200px] 2xl:max-w-[1300px] px-4 sm:px-6 flex justify-center">
       <motion.div
-        className="relative flex items-center justify-center lg:justify-between h-16 py-3 pl-4 sm:pl-6 md:pl-8 pr-2 sm:pr-3 rounded-full bg-black/30 dark:bg-black/30 backdrop-blur-2xl border border-white/20 dark:border-white/20 shadow-xl overflow-hidden"
+        className="relative flex items-center justify-center xl:justify-between h-16 py-3 pl-4 sm:pl-6 md:pl-8 pr-2 sm:pr-3 rounded-full bg-black/30 dark:bg-black/30 backdrop-blur-2xl border border-white/20 dark:border-white/20 shadow-xl overflow-hidden"
         initial={{ width: "300px", marginLeft: "auto", marginRight: "auto" }}
         animate={{
           width: isExpanded ? "100%" : "300px",
@@ -65,7 +66,7 @@ export function Navbar() {
         }}
       >
         {/* Mobile: Logo on Left */}
-        <div className="lg:hidden">
+        <div className="xl:hidden">
           <Link href="/" className="flex items-center">
             <Image
               src="/images/talents/logowhite.png"
@@ -78,7 +79,7 @@ export function Navbar() {
         </div>
 
         {/* Desktop: Center - Brand Name (always centered) */}
-        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2">
+        <div className="hidden xl:block absolute left-1/2 -translate-x-1/2">
           <Link href="/" className="flex items-center">
             <Image
               src="/images/talents/logowhite.png"
@@ -94,7 +95,7 @@ export function Navbar() {
         <AnimatePresence>
           {showContent && (
             <motion.div
-              className="hidden lg:flex items-center gap-6 sm:gap-8 md:gap-10"
+              className="hidden xl:flex items-center gap-6 sm:gap-8 md:gap-10"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
@@ -123,7 +124,7 @@ export function Navbar() {
         <AnimatePresence>
           {showContent && (
             <motion.div
-              className="hidden lg:flex items-center gap-4 sm:gap-6"
+              className="hidden xl:flex items-center gap-4 sm:gap-6"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 30 }}
@@ -164,7 +165,7 @@ export function Navbar() {
         </AnimatePresence>
 
         {/* Mobile: Theme Toggle & Burger Icon on Right */}
-        <div className="lg:hidden flex items-center gap-2">
+        <div className="xl:hidden flex items-center gap-2">
           <motion.button
             onClick={toggleTheme}
             className="p-2 rounded-full bg-white/10 dark:bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20 transition-all"

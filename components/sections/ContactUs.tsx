@@ -40,7 +40,7 @@ export function ContactUs() {
     };
 
     return (
-        <section id="contact" className="pb-24 px-4 sm:px-6 lg:px-8 bg-background transition-colors duration-300">
+        <section id="contact" className="pb-24 md:pb-32 px-4 sm:px-6 lg:px-8 bg-background transition-colors duration-300">
             <div className="mx-auto max-w-[1440px]">
 
                 {/* Main "Folder" Container */}

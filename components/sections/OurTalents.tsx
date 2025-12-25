@@ -223,7 +223,7 @@ export default function OurTalents() {
   }, [theme]);
 
   return (
-    <section className="pb-16 px-0 sm:px-6 lg:px-8 bg-background overflow-visible">
+    <section className="pb-24 md:pb-32 px-0 sm:px-6 lg:px-8 bg-background overflow-visible">
       <div className="mx-auto overflow-visible max-w-[1440px]">
         {/* Section Header */}
         <div className="mb-12 text-center">

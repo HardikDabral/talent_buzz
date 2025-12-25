@@ -91,21 +91,21 @@ export default function AboutUs() {
   }, [theme]);
 
   return (
-    <section id="about" className="py-24 px-4 sm:px-6 bg-background overflow-hidden relative w-full transition-colors duration-300">
+    <section id="about" className="py-24 md:py-36 px-4 sm:px-6 bg-background overflow-hidden relative w-full transition-colors duration-300">
       <div className="mx-auto max-w-[1800px] relative">
         {/* Section Header */}
         <div className="text-center mb-12">
           <p
-            className="text-xs mb-2 font-medium tracking-wider uppercase"
+            className="text-xs mb-3 font-bold tracking-[0.2em] uppercase opacity-70"
             style={{ color: isDark ? "#ffffff" : "#000000" }}
           >
             WHAT WE BUILD
           </p>
           <h2
-            className="text-3xl md:text-4xl font-semibold"
+            className="text-3xl md:text-5xl font-black tracking-tighter"
             style={{ color: isDark ? "#ffffff" : "#000000" }}
           >
-            Crafting Digital Excellence
+            Crafting Digital <span className="text-[#2C9F85]">Excellence</span>
           </h2>
         </div>
 

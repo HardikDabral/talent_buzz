@@ -24,6 +24,14 @@ const Faq = dynamic(() => import("@/components/sections/Faq"), {
   loading: () => <div className="min-h-[400px]" />,
 });
 
+const PricingSection = dynamic(() => import("@/components/sections/PricingSection").then((mod) => mod.PricingSection), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+
+const UiKit = dynamic(() => import("@/components/sections/UiKit").then((mod) => mod.UiKit), {
+  loading: () => <div className="min-h-[400px]" />,
+});
+
 const ContactUs = dynamic(() => import("@/components/sections/ContactUs").then((mod) => mod.ContactUs), {
   loading: () => <div className="min-h-[400px]" />,
 });
@@ -43,10 +51,16 @@ export default function Home() {
         <AboutUs />
       </Suspense>
 
-      <Talents />
+      <Suspense fallback={<div className="min-h-[400px]" />}>
+        <Talents />
+      </Suspense>
 
       <Suspense fallback={<div className="min-h-[400px]" />}>
-        <OurTalents />
+        <PricingSection />
+      </Suspense>
+
+      <Suspense fallback={<div className="min-h-[400px]" />}>
+        <UiKit />
       </Suspense>
 
       <Suspense fallback={<div className="min-h-[400px]" />}>
