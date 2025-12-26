@@ -25,6 +25,8 @@ export function Navbar() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { theme, toggleTheme } = useThemeStore();
   const [isDark, setIsDark] = useState(false);
+  const { scrollY } = useScroll();
+  const navTop = useTransform(scrollY, [0, 100], ["2.5rem", "1rem"]);
 
   useEffect(() => {
     const checkTheme = () => {
@@ -75,7 +77,8 @@ export function Navbar() {
   return (
     <>
       <motion.nav
-        className="fixed top-15 left-1/2 -translate-x-1/2 z-50 w-full max-w-[96%] sm:max-w-[93%] md:max-w-[90%] lg:max-w-[88%] xl:max-w-[1200px] 2xl:max-w-[1300px] px-4 sm:px-6 flex justify-center sm:top-14"
+        style={{ top: navTop }}
+        className="fixed left-1/2 -translate-x-1/2 z-50 w-full max-w-[96%] sm:max-w-[93%] md:max-w-[90%] lg:max-w-[88%] xl:max-w-[1200px] 2xl:max-w-[1300px] px-4 sm:px-6 flex justify-center sm:!top-10"
       >
         <motion.div
           className="relative flex items-center justify-center lg:justify-between h-16 py-3 pl-4 sm:pl-6 md:pl-8 pr-2 sm:pr-3 rounded-full backdrop-blur-2xl border border-white/20 dark:border-white/20 shadow-xl overflow-hidden"
