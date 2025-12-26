@@ -250,7 +250,8 @@ export function PricingSection() {
                                                             Starting From
                                                         </span>
                                                         <h3 className={cn(
-                                                            "text-5xl font-black tracking-tighter leading-none text-[#FFFFFF]"
+                                                            "text-5xl font-black tracking-tighter leading-none",
+                                                            isDark ? "text-white" : "text-[#2C9F85]"
                                                         )}>
                                                             {tier.price}
                                                         </h3>
