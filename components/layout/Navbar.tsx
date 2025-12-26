@@ -25,8 +25,6 @@ export function Navbar() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { theme, toggleTheme } = useThemeStore();
   const [isDark, setIsDark] = useState(false);
-  const { scrollY } = useScroll();
-  const navTop = useTransform(scrollY, [0, 100], ["2.5rem", "1rem"]);
 
   useEffect(() => {
     const checkTheme = () => {
@@ -77,8 +75,7 @@ export function Navbar() {
   return (
     <>
       <motion.nav
-        style={{ top: navTop }}
-        className="fixed left-1/2 -translate-x-1/2 z-50 w-full max-w-[96%] sm:max-w-[93%] md:max-w-[90%] lg:max-w-[88%] xl:max-w-[1200px] 2xl:max-w-[1300px] px-4 sm:px-6 flex justify-center sm:!top-10"
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-[96%] sm:max-w-[93%] md:max-w-[90%] lg:max-w-[88%] xl:max-w-[1200px] 2xl:max-w-[1300px] px-4 sm:px-6 flex justify-center sm:top-10"
       >
         <motion.div
           className="relative flex items-center justify-center lg:justify-between h-16 py-3 pl-4 sm:pl-6 md:pl-8 pr-2 sm:pr-3 rounded-full backdrop-blur-2xl border border-white/20 dark:border-white/20 shadow-xl overflow-hidden"
@@ -199,6 +196,20 @@ export function Navbar() {
 
           {/* Mobile: Theme Toggle & Burger Icon on Right */}
           <div className="xl:hidden flex items-center gap-2">
+            <motion.button
+              onClick={toggleTheme}
+              className="p-2 rounded-full bg-white/10 dark:bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20 transition-all"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.5 }}
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
+            </motion.button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-white p-2"
