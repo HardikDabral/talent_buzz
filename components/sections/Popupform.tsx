@@ -14,10 +14,17 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface PopupFormProps {
     trigger?: React.ReactNode;
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
 }
 
-export function PopupForm({ trigger }: PopupFormProps) {
-    const [open, setOpen] = useState(false);
+export function PopupForm({ trigger, open: controlledOpen, onOpenChange: setControlledOpen }: PopupFormProps) {
+    const [internalOpen, setInternalOpen] = useState(false);
+
+    const isControlled = controlledOpen !== undefined;
+    const open = isControlled ? controlledOpen : internalOpen;
+    const setOpen = isControlled ? (setControlledOpen || (() => { })) : setInternalOpen;
+
     const [formState, setFormState] = useState({
         name: "",
         phone: "",
@@ -78,7 +85,7 @@ export function PopupForm({ trigger }: PopupFormProps) {
                     </button>
                 )}
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[625px] p-0 bg-background/95 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-2xl overflow-hidden rounded-3xl">
+            <DialogContent className="w-[90vw] sm:w-full sm:max-w-[625px] p-0 bg-background/95 backdrop-blur-xl border-white/10 dark:border-white/10 shadow-2xl overflow-hidden rounded-3xl">
                 <div className="relative p-6 sm:p-8">
                     {/* Decorative Background Elements */}
                     <div className="absolute top-0 right-0 -mt-16 -mr-16 w-32 h-32 bg-[#2C9F85]/20 rounded-full blur-3xl pointer-events-none" />
